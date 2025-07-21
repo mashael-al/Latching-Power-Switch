@@ -1,0 +1,27 @@
+const int buttonPin = 2;
+const int ledpin = 13;
+bool ledstate = false;
+unsigned long lastPress = 0;
+const unsigned long autoOffTime = 10000;
+
+void setup() {
+  pinMode(buttonPin, INPUT);
+  pinMode(ledpin, OUTPUT);
+}
+
+void loop() {
+  int buttonState = digitalRead(buttonPin);
+  
+  if (buttonState == HIGH && !ledstate) {
+    ledstate = true;
+    digitalWrite(ledpin, HIGH);
+    lastPress = millis();
+  }
+
+  if (ledstate && millis() - lastPress >= autoOffTime) {
+    digitalWrite(ledpin, LOW);
+    ledstate = false;
+  }
+}
+
+
